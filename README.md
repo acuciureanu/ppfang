@@ -26,6 +26,28 @@ Processing https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.m
 [...]
 ```
 
+##### Configuration
+
+There is a config file names `app.config.js` which can be found in the root of the project.
+
+I defined some options for `cdnjs`. For example, you can change the `filename` to which the findings are thrown.
+
+Also, the `concurrency` option can come pretty handy in case you need that changed.
+
+```js
+export default {
+    cdnjs: {
+        concurrency: 10,
+        api: {
+            url: 'https://api.cdnjs.com',
+        },
+        export: {
+            filename: 'cdnjs.findings.json',
+        },
+    },
+};
+```
+
 After the tool finishes the job, it will dump all the results in `cdnjs.findings.json`.
 
 # Greetings to everyone

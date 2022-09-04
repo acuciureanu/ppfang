@@ -39,7 +39,7 @@ Saved findings to: [PATH]\cdnjs.findings.json
 [...]
 ```
 
-In this case. the first finding is `String.prototype.$initialize`.
+In this case, the first finding is `String.prototype.$initialize`.
 
 We can execute an `alert()` in this way: `String.prototype.$initialize.call().alert(document.domain)`.
 

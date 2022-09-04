@@ -1,0 +1,23 @@
+{
+    "name": "ppfang",
+    "version": "1.0.0",
+    "description": "A service which detects prototype pollution in libraries",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "husky install"
+    },
+    "author": "Alex Cuciureanu",
+    "license": "ISC",
+    "type": "module",
+    "dependencies": {
+        "@supercharge/promise-pool": "^2.3.2",
+        "axios": "^0.27.2",
+        "puppeteer": "^17.1.0"
+    },
+    "devDependencies": {
+        "husky": "^8.0.1",
+        "lint-staged": "^13.0.3",
+        "prettier": "^2.7.1"
+    }
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html>
+    <script>
+        const types = [Object, String, Number, Array, Function, Boolean];
+
+        const prototypesPropertiesReducer = (acc, type) => ({
+            ...acc,
+            [type.name]: Object.getOwnPropertyNames(type.prototype),
+        });
+        const intersectProtoPropNameReducer = (acc, type, prev, curr) =>
+            prev !== undefined && curr !== undefined
+                ? {
+                      ...acc,
+                      [type.name]: curr[type.name].filter((protoPropName) => !prev[type.name].includes(protoPropName)),
+                  }
+                : { ...acc };
+
+        const prototypePropertyNames = () => types.reduce(prototypesPropertiesReducer, {});
+        const intersectPropertyNames = (prev, curr) =>
+            types.reduce((acc, type) => intersectProtoPropNameReducer(acc, type, prev, curr), {});
+    </script>
+
+    <script>
+        const before = prototypePropertyNames();
+    </script>
+
+    <script id="target"></script>
+
+    <script>
+        const after = prototypePropertyNames();
+
+        const result = intersectPropertyNames(before, after);
+
+        const probe = () =>
+            Object.keys(result).reduce((acc, key) => {
+                for (let propKey of result[key]) {
+                    const payload = `${key}.prototype.${propKey}`;
+                    try {
+                        if (typeof eval(payload) === 'function' && eval(payload).call() === window) {
+                            acc.push(payload);
+                        }
+                    } catch (e) {
+                        // Nothing to catch now.
+                    }
+                }
+                return acc;
+            }, []);
+    </script>
+</html>

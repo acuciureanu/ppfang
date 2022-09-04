@@ -8,13 +8,13 @@ written by [@aszx87410](https://github.com/aszx87410) aka Huli.
 
 My motivation was to create my own tool with a slightly different approach.
 
-##### Install dependencies
+### Install dependencies
 
 ```sh
 $ npm install
 ```
 
-##### Run the tool
+### Run the tool
 
 ```sh
 $ node index.js
@@ -28,7 +28,7 @@ Processing https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.m
 Saved findings to: [PATH]\cdnjs.findings.json
 ```
 
-##### Make use of the findings
+### Make use of the findings
 
 ```
    {
@@ -43,7 +43,7 @@ In this case, the first finding is `String.prototype.$initialize`.
 
 We can execute an `alert()` in this way: `String.prototype.$initialize.call().alert(document.domain)`.
 
-##### Configuration
+### Configuration
 
 There is a config file names `app.config.js` which can be found in the root of the project.
 

@@ -1,7 +1,7 @@
 # PPFang 
 [![CodeQL](https://github.com/acuciureanu/ppfang/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/acuciureanu/ppfang/actions/workflows/codeql-analysis.yml)
 
-Is a tool which helps identifying prototype polluting libraries from [cdnjs.com](https://cdnjs.com/).
+This is a tool which helps identifying prototype polluting libraries from [cdnjs.com](https://cdnjs.com/).
 
 The idea came to my mind after checking out a tool named [cdnjs-prototype-pollution](https://github.com/aszx87410/cdnjs-prototype-pollution)
 written by [@aszx87410](https://github.com/aszx87410) aka Huli.

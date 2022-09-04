@@ -28,6 +28,21 @@ Processing https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.m
 Saved findings to: [PATH]\cdnjs.findings.json
 ```
 
+##### Make use of the findings
+
+```
+   {
+        "name": "asciidoctor.js",
+        "url": "https://cdnjs.cloudflare.com/ajax/libs/asciidoctor.js/1.5.9/asciidoctor.min.js",
+        "findings": [
+            "String.prototype.$initialize", 
+[...]
+```
+
+In this case. the first finding is `String.prototype.$initialize`.
+
+We can execute an `alert()` in this way: `String.prototype.$initialize.call().alert(document.domain)`.
+
 ##### Configuration
 
 There is a config file names `app.config.js` which can be found in the root of the project.

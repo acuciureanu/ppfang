@@ -7,8 +7,6 @@ import process from 'node:process';
 import { PromisePool } from '@supercharge/promise-pool';
 import { sandboxHtml } from '../utils/sandbox.utils.js';
 
-import libraries from '../libraries.js';
-
 const browser = await puppeteer.launch({ headless: true });
 
 const client = axios.create({

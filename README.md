@@ -19,4 +19,6 @@ $ npm install
 $ node index.js
 ```
 
-##### Greetings to everyone
+After the tool finishes the job, it will dump all the results in `cdnjs.findings.json`.
+
+# Greetings to everyone

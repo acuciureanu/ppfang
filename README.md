@@ -17,6 +17,15 @@ $ npm install
 
 ```sh
 $ node index.js
+
+Processing https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.38/vue.cjs.js ...
+Processing https://cdnjs.cloudflare.com/ajax/libs/react-is/18.2.0/umd/react-is.production.min.js ...
+Processing https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js ...
+Processing https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js ...
+Processing https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js ...
+[...]
 ```
 
-##### Greetings to everyone
+After the tool finishes the job, it will dump all the results in `cdnjs.findings.json`.
+
+# Greetings to everyone

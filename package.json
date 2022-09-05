@@ -11,9 +11,9 @@
     "license": "ISC",
     "type": "module",
     "dependencies": {
-        "@supercharge/promise-pool": "^2.3.2",
         "axios": "^0.27.2",
-        "puppeteer": "^17.1.0"
+        "puppeteer": "^17.1.0",
+        "puppeteer-cluster": "^0.23.0"
     },
     "devDependencies": {
         "husky": "^8.0.1",

@@ -1,17 +1,19 @@
 import axios from 'axios';
-import config from '../app.config.js';
 import fs from 'node:fs';
 import path from 'node:path';
-import puppeteer from 'puppeteer';
 import process from 'node:process';
-import { PromisePool } from '@supercharge/promise-pool';
+import config from '../app.config.js';
 import { sandboxHtml } from '../utils/sandbox.utils.js';
+import { Cluster } from 'puppeteer-cluster';
 
-const browser = await puppeteer.launch({ headless: true });
+const cluster = await Cluster.launch({
+    concurrency: Cluster.CONCURRENCY_CONTEXT,
+    maxConcurrency: 10,
+});
 
 const client = axios.create({
     baseURL: config.cdnjs.api.url,
-    timeout: 1000,
+    timeout: 5000,
 });
 
 const getLibraries = async () =>
@@ -20,32 +22,31 @@ const getLibraries = async () =>
         .then((response) => response.data.results.filter((result) => result.latest !== null))
         .catch((error) => console.log(error));
 
-const probe = async (library) => {
+const probe = async ({ page, data: { name, latest } }) => {
     const pageLoadConfig = { waitUntil: 'networkidle0' };
-
-    const page = await browser.newPage();
 
     await page.setJavaScriptEnabled(false);
     await page.goto(`data:text/html,${sandboxHtml}`, pageLoadConfig);
 
-    const injectedHtml = await page.evaluate((library) => {
-        document.querySelector('#target').setAttribute('src', `${library.latest}`);
+    const injectedHtml = await page.evaluate((latest) => {
+        document.querySelector('#target').setAttribute('src', `${latest}`);
         return document.documentElement.outerHTML;
-    }, library);
+    }, latest);
 
     await page.setJavaScriptEnabled(true);
 
     await page.goto(`data:text/html,${injectedHtml}`, pageLoadConfig);
 
-    const results = await page.evaluate('probe()');
+    const findings = await page.evaluate('probe()');
 
-    await page.close();
+    console.log(`${findings.length ? '[ FOUND ]' : '---------'} Processed ${latest} ...`);
 
-    return { name: library.name, url: library.latest, findings: results };
+    return { name, url: latest, findings };
 };
 
-const save = (results) => {
-    const findings = results.filter((result) => result.findings.length);
+const keepFindings = (libraries) => libraries.filter((library) => library.findings.length);
+
+const saveFindings = (findings) => {
     const output = path.join(process.cwd(), config.cdnjs.export.filename);
     fs.writeFileSync(output, JSON.stringify(findings));
     console.log(`Saved findings to: ${output}`);
@@ -53,17 +54,13 @@ const save = (results) => {
 
 const probeAll = async () => {
     const libraries = await getLibraries();
-    const { results } = await PromisePool.withConcurrency(config.cdnjs.concurrency)
-        .for(libraries)
-        .onTaskFinished((library, pool) => {
-            const stats = `[${pool.processedCount()}/${libraries.length} | ${pool.processedPercentage().toFixed(2)}%]`;
-            console.log(`${stats} Processed ${library.latest} ...`);
-        })
-        .process(probe);
 
-    save(results);
-    browser.close();
-    return results;
+    const promisedLibraries = libraries.map((library) => cluster.execute(library, probe));
+
+    Promise.all(promisedLibraries).then(keepFindings).then(saveFindings);
+
+    await cluster.idle();
+    await cluster.close();
 };
 
 export default { probeAll };

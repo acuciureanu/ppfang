@@ -52,9 +52,13 @@ const save = (results) => {
 };
 
 const probeAll = async () => {
+    const libraries = await getLibraries();
     const { results } = await PromisePool.withConcurrency(config.cdnjs.concurrency)
-        .for(await getLibraries())
-        .onTaskStarted((library) => console.log(`Processing ${library.latest} ...`))
+        .for(libraries)
+        .onTaskFinished((library, pool) => {
+            const stats = `[${pool.processedCount()}/${libraries.length} | ${pool.processedPercentage().toFixed(2)}%]`;
+            console.log(`${stats} Processed ${library.latest} ...`);
+        })
         .process(probe);
 
     save(results);

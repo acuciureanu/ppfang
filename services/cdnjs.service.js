@@ -8,7 +8,7 @@ import { Cluster } from 'puppeteer-cluster';
 
 const cluster = await Cluster.launch({
     concurrency: Cluster.CONCURRENCY_CONTEXT,
-    maxConcurrency: 10,
+    maxConcurrency: config.cdnjs.concurrency,
 });
 
 const client = axios.create({

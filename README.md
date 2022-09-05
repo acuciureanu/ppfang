@@ -1,4 +1,5 @@
-# PPFang 
+# PPFang
+
 [![CodeQL](https://github.com/acuciureanu/ppfang/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/acuciureanu/ppfang/actions/workflows/codeql-analysis.yml)
 
 This is a tool which helps identifying prototype polluting libraries from [cdnjs.com](https://cdnjs.com/).
@@ -8,13 +9,13 @@ written by [@aszx87410](https://github.com/aszx87410) aka Huli.
 
 My motivation was to create my own tool with a slightly different approach.
 
-### Install dependencies
+## Install dependencies
 
 ```sh
-$ npm install
+npm install
 ```
 
-### Run the tool
+## Run the tool
 
 ```sh
 $ node index.js
@@ -28,14 +29,14 @@ Processing https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.m
 Saved findings to: [PATH]\cdnjs.findings.json
 ```
 
-### Make use of the findings
+## Make use of the findings
 
-```
+```text
    {
         "name": "asciidoctor.js",
         "url": "https://cdnjs.cloudflare.com/ajax/libs/asciidoctor.js/1.5.9/asciidoctor.min.js",
         "findings": [
-            "String.prototype.$initialize", 
+            "String.prototype.$initialize",
 [...]
 ```
 
@@ -43,7 +44,7 @@ In this case, the first finding is `String.prototype.$initialize`.
 
 We can execute an `alert()` in this way: `String.prototype.$initialize.call().alert(document.domain)`.
 
-### Configuration
+## Configuration
 
 There is a config file names `app.config.js` which can be found in the root of the project.
 
@@ -67,4 +68,4 @@ export default {
 
 After the tool finishes the job, it will dump all the results in `cdnjs.findings.json`.
 
-# Greetings to everyone
+## Greetings to everyone

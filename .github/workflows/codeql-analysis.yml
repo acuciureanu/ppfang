@@ -13,10 +13,10 @@ name: 'CodeQL'
 
 on:
     push:
-        branches: ['main']
+        branches: ['main', 'make-use-of-puppeteer-cluster']
     pull_request:
         # The branches below must be a subset of the branches above
-        branches: ['main']
+        branches: ['main', 'make-use-of-puppeteer-cluster']
     schedule:
         - cron: '34 22 * * 1'
 

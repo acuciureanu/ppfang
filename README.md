@@ -69,4 +69,10 @@ export default {
 
 After the tool finishes the job, it will dump all the results in `cdnjs.findings.json`.
 
+## Maybe interesting to see
+
+I reimplemented the `cdnjs.service.js` using [`puppeteer-cluster`](https://github.com/thomasdondorf/puppeteer-cluster).
+
+These changes are on the [`make-use-of-puppeteer-cluster`](https://github.com/acuciureanu/ppfang/tree/make-use-of-puppeteer-cluster) branch.
+
 ## Greetings to everyone

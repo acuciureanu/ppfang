@@ -1,40 +1,39 @@
 name: Node.js Package
 
 on:
-    push:
-        branches: [main, command-line-tool]
-    pull_request:
-        branches: '*'
+  push:
+    branches: [main, command-line-tool]
+  pull_request:
+    branches: '*'
 
 jobs:
-    build:
-        runs-on: ${{ matrix.os }}
+  build:
+    runs-on: ${{ matrix.os }}
+    
+    strategy:
+      matrix:
+        node-version: [14.x, 15.x, 16.x]
+        os: [macos-latest, windows-latest, ubuntu-latest]
 
-        strategy:
-            matrix:
-                node-version: [14.x, 15.x, 16.x]
-                os: [macos-latest, windows-latest, ubuntu-latest]
-
-        steps:
-        - uses: actions/checkout@v3
-        - name: Use Node.js ${{ matrix.node-version }}
-          uses: actions/setup-node@v3
-          with:
-            node-version: ${{ matrix.node-version }}
-        - run: npm ci
-
-    publish:
-        needs: build
-        runs-on: ${{ matrix.os }}
-
-        steps:
-            - uses: actions/checkout@v3
-            - name: Use Node.js ${{ matrix.node-version }}
-            - uses: actions/setup-node@v3
-              with:
-                  node-version: ${{ matrix.node-version }}
-#                 registry-url: https://registry.npmjs.org/
-            - run: npm ci
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+  
+  publish:
+    runs-on: ${{ matrix.os }}
+    needs: build
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+#       registry-url: https://registry.npmjs.org/
+    - run: npm ci
 #      - run: npm run semantic-release
 #       env:
 #         NODE_AUTH_TOKEN: ${{secrets.npm_token}}

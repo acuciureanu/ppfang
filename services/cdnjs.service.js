@@ -11,7 +11,7 @@ const browser = await puppeteer.launch({ headless: true });
 
 const client = axios.create({
     baseURL: config.cdnjs.api.url,
-    timeout: 1000,
+    timeout: 5000,
 });
 
 const getLibraries = async () =>

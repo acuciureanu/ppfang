@@ -25,6 +25,7 @@ jobs:
   
   publish:
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: build
     steps:
     - uses: actions/checkout@v3
@@ -32,8 +33,9 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-#       registry-url: https://registry.npmjs.org/
     - run: npm ci
-#      - run: npm run semantic-release
-#       env:
-#         NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+    - run: npm run semantic-release
+      env:
+        NODE_TOKEN: ${{ secrets.NODE_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

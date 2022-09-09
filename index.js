@@ -6,17 +6,21 @@ import cdnjs from './services/cdnjs.service.js';
 const program = new Command();
 
 program
-    .description('A tool which helps identifying client-side prototype polluting libraries')
-    .option('-c, --cdnjs', 'Test the latest libraries from cdnjs.com');
+    .name('ppfang')
+    .description('A tool which helps identifying client-side prototype polluting libraries');
 
-program.parse();
+program.command('check')
+    .option('-c, --concurrency [concurrency]', 'the level of concurrency', '10')
+    .addHelpText('afterAll', '\nThanks for using this tool :)');
 
-const options = program.opts();
+const opts = program.opts();
 
-if (options.cdnjs) {
-    cdnjs.probeAll();
+const concurrency = Number.parseInt(opts.concurrency);
+
+if (concurrency > 0) {
+    cdnjs.probeAll(concurrency)
 } else {
-    program.help();
+    cdnjs.probeAll();
 }
 
 program.parse();

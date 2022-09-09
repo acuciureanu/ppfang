@@ -9,16 +9,28 @@ written by [@aszx87410](https://github.com/aszx87410) aka Huli.
 
 My motivation was to create my own tool with a slightly different approach.
 
+## Usage
+
+```text
+Usage: ppfang [options]
+
+A tool which helps identifying client-side prototype polluting libraries
+
+Options:
+  -c, --cdnjs  Test the latest libraries from cdnjs.com
+  -h, --help   display help for command
+```
+
 ## Install dependencies
 
 ```sh
-npm install
+npm install -g ppfang
 ```
 
 ## Run the tool
 
 ```sh
-$ node index.js
+$ ppfang --cdnjs
 
 [1/4281 | 0.02%] Processed https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.38/vue.cjs.js ...
 [2/4281 | 0.05%] Processed https://cdnjs.cloudflare.com/ajax/libs/react-is/18.2.0/umd/react-is.production.min.js ...

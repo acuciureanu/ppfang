@@ -2,7 +2,7 @@ name: Node.js Package
 
 on:
   push:
-    branches: [main, command-line-tool]
+    branches: [main]
   pull_request:
     branches: '*'
 

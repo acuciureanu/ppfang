@@ -1,28 +1,33 @@
 {
-    "name": "ppfang",
-    "version": "1.0.0",
-    "description": "A service which detects prototype pollution in libraries",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "prepare": "husky install",
-        "semantic-release": "semantic-release --branches main"
-    },
-    "author": "Alex Cuciureanu",
-    "license": "MIT",
-    "bin": {
-        "ppfang": "./index.js"
-    },
-    "type": "module",
-    "dependencies": {
-        "@supercharge/promise-pool": "^2.3.2",
-        "axios": "^0.27.2",
-        "commander": "^9.4.0",
-        "puppeteer": "^17.1.0",
-        "semantic-release": "^19.0.5"
-    },
-    "devDependencies": {
-        "husky": "^8.0.1",
-        "prettier": "^2.7.1"
-    }
+  "name": "ppfang",
+  "version": "0.0.0-development",
+  "description": "A service which detects prototype pollution in libraries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "semantic-release": "semantic-release"
+  },
+  "author": "Alex Cuciureanu",
+  "license": "MIT",
+  "bin": {
+    "ppfang": "./index.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "@supercharge/promise-pool": "^2.3.2",
+    "axios": "^0.27.2",
+    "commander": "^9.4.0",
+    "puppeteer": "^17.1.0",
+    "semantic-release": "^19.0.5"
+  },
+  "devDependencies": {
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "semantic-release": "^19.0.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/acuciureanu/ppfang.git"
+  }
 }

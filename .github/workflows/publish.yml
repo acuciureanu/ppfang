@@ -24,7 +24,7 @@ jobs:
     - run: npm ci
   
   publish:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     needs: build
     steps:
     - uses: actions/checkout@v3

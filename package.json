@@ -7,7 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "husky install",
         "commit": "git-cz",
-        "semantic-release": "semantic-release"
+        "semantic-release": "semantic-release --branches main"
     },
     "author": "Alex Cuciureanu",
     "license": "MIT",

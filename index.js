@@ -17,6 +17,7 @@ Examples:
 
   ppfang --help || ppfang
 
+Happy hunting!
 `
 );
 

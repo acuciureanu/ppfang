@@ -36,6 +36,6 @@ jobs:
     - run: npm ci
     - run: npm run semantic-release
       env:
-        NODE_TOKEN: ${{ secrets.NODE_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

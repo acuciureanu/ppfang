@@ -12,13 +12,27 @@ My motivation was to create my own tool with a slightly different approach.
 ## Usage
 
 ```text
-Usage: ppfang [options]
+
+Usage: ppfang [command] [option]
 
 A tool which helps identifying client-side prototype polluting libraries
 
 Options:
-  -c, --cdnjs  Test the latest libraries from cdnjs.com
-  -h, --help   display help for command
+  -h, --help       display help for command
+
+Commands:
+  check [options]  Verifies the latest libraries from cdnjs.com
+  help [command]   display help for command
+
+
+Examples:
+
+  ppfang check
+
+  ppfang check -c 50
+
+  ppfang --help
+
 ```
 
 ## Install dependencies

@@ -47,13 +47,13 @@ const probe = async (library) => {
 const save = (results) => {
     const findings = results.filter((result) => result.findings.length);
     const output = path.join(process.cwd(), config.cdnjs.export.filename);
-    fs.writeFileSync(output, JSON.stringify(findings));
+    fs.writeFileSync(output, JSON.stringify(findings, null, 4), { encoding: 'utf8' });
     console.log(`Saved findings to: ${output}`);
 };
 
-const probeAll = async () => {
+const probeAll = async (concurrency) => {
     const libraries = await getLibraries();
-    const { results } = await PromisePool.withConcurrency(config.cdnjs.concurrency)
+    const { results } = await PromisePool.withConcurrency(concurrency)
         .for(libraries)
         .onTaskFinished((library, pool) => {
             const stats = `[${pool.processedCount()}/${libraries.length} | ${pool.processedPercentage().toFixed(2)}%]`;

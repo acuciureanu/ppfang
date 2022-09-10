@@ -1,4 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'url';
 
-export const sandboxHtml = fs.readFileSync(path.join(process.cwd(), '/sandbox/index.html'), { encoding: 'utf-8' });
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+export const sandboxHtml = fs.readFileSync(path.resolve(path.join(__dirname, '../sandbox/index.html')), { encoding: 'utf-8' });

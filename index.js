@@ -15,7 +15,7 @@ Examples:
 
   ppfang check -c 50
 
-  ppfang --help
+  ppfang --help || ppfang
 
 `
 );
@@ -35,4 +35,3 @@ program
     });
 
 program.parse();
-

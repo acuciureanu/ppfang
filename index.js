@@ -5,7 +5,25 @@ import cdnjs from './services/cdnjs.service.js';
 
 const program = new Command();
 
-program.name('ppfang').description('A tool which helps identifying client-side prototype polluting libraries');
+program.addHelpText(
+    'afterAll',
+    `
+
+Examples:
+
+  ppfang check
+
+  ppfang check -c 50
+
+  ppfang --help
+
+`
+);
+
+program
+    .name('ppfang')
+    .usage('[command] [option]')
+    .description('A tool which helps identifying client-side prototype polluting libraries');
 
 program
     .command('check')
@@ -13,8 +31,7 @@ program
     .option('-c, --concurrency <concurrency>', 'concurrency level', '10')
     .action((options) => {
         const concurrency = Number.parseInt(options.concurrency);
-        (concurrency) ? cdnjs.probeAll(concurrency) : cdnjs.probeAll(10)
-    })
-    .addHelpText('afterAll', '\nThanks for using this tool :)');
+        concurrency ? cdnjs.probeAll(concurrency) : cdnjs.probeAll(10);
+    });
 
 program.parse();

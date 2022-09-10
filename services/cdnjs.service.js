@@ -47,7 +47,7 @@ const probe = async (library) => {
 const save = (results) => {
     const findings = results.filter((result) => result.findings.length);
     const output = path.join(process.cwd(), config.cdnjs.export.filename);
-    fs.writeFileSync(output, JSON.stringify(findings));
+    fs.writeFileSync(output, JSON.stringify(findings, null, 4), { encoding: 'utf8' });
     console.log(`Saved findings to: ${output}`);
 };
 

@@ -15,25 +15,9 @@ My motivation was to create my own tool with a slightly different approach.
 npm install -g ppfang
 ```
 
-## Run the tool
-
-```sh
-$ ppfang check
-
-[1/4281 | 0.02%] Processed https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.38/vue.cjs.js ...
-[2/4281 | 0.05%] Processed https://cdnjs.cloudflare.com/ajax/libs/react-is/18.2.0/umd/react-is.production.min.js ...
-[3/4281 | 0.07%] Processed https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js ...
-[4/4281 | 0.09%] Processed https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js ...
-[5/4281 | 0.12%] Processed https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js ...
-[6/4281 | 0.14%] Processed https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/js/bootstrap.min.js ...
-[...]
-Saved findings to: [PATH]\cdnjs.findings.json
-```
-
 ## Usage
 
 ```text
-
 Usage: ppfang [command] [option]
 
 A tool which helps identifying client-side prototype polluting libraries
@@ -42,58 +26,31 @@ Options:
   -h, --help       display help for command
 
 Commands:
-  check [options]  Verifies the latest libraries from cdnjs.com
+  cdnjs [options]  Verifies the latest libraries from cdnjs.com
+  pipe [options]   Checks a list of urls provided through stdin for client-side prototype polluting functions
   help [command]   display help for command
 
 
 Examples:
 
-  ppfang check
+  ppfang cdnjs
 
-  ppfang check -c 50
+  ppfang cdnjs -c 50
 
-  ppfang --help
+  cat urls.txt | ppfang pipe -c 10
 
-```
+  echo "https://somesite.com/" | ppfang pipe
 
-## Make use of the findings
+  gau --blacklist png,jpg,gif,txt,json,js some-random-domain.com | ppfang pipe -c 50
 
-```text
-   {
-        "name": "asciidoctor.js",
-        "url": "https://cdnjs.cloudflare.com/ajax/libs/asciidoctor.js/1.5.9/asciidoctor.min.js",
-        "findings": [
-            "String.prototype.$initialize",
-[...]
+  ppfang --help || ppfang
+
+Happy hunting!
 ```
 
 In this case, the first finding is `String.prototype.$initialize`.
 
 We can execute an `alert()` in this way: `String.prototype.$initialize.call().alert(document.domain)`.
-
-## Configuration
-
-There is a config file names `app.config.js` which can be found in the root of the project.
-
-I defined some options for `cdnjs`. For example, you can change the `filename` to which the findings are thrown.
-
-Also, the `concurrency` option can come pretty handy in case you need that changed to speed things up.
-
-```js
-export default {
-    cdnjs: {
-        concurrency: 10,
-        api: {
-            url: 'https://api.cdnjs.com',
-        },
-        export: {
-            filename: 'cdnjs.findings.json',
-        },
-    },
-};
-```
-
-After the tool finishes the job, it will dump all the results in `cdnjs.findings.json`.
 
 ## Maybe interesting to see
 

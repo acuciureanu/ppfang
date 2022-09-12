@@ -8,7 +8,7 @@ import check from './services/check.service.js';
 const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    terminal: false
+    terminal: false,
 });
 
 const program = new Command();
@@ -38,7 +38,7 @@ Happy hunting!
 program
     .name('ppfang')
     .usage('[command] [option]')
-    .description('A tool which helps identifying client-side prototype polluting libraries')
+    .description('A tool which helps identifying client-side prototype polluting libraries');
 
 program
     .command('cdnjs')
@@ -49,7 +49,8 @@ program
         process.exit(0);
     });
 
-program.command('pipe')
+program
+    .command('pipe')
     .description('Checks a list of urls provided through stdin for client-side prototype polluting functions')
     .action(async (options) => {
         const concurrency = Number.parseInt(options.concurrency);

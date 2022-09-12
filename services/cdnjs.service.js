@@ -1,11 +1,8 @@
 import axios from 'axios';
 import config from '../app.config.js';
-import fs from 'node:fs';
-import path from 'node:path';
+import { load, log } from '../utils/file.utils.js';
 import puppeteer from 'puppeteer';
-import process from 'node:process';
 import { PromisePool } from '@supercharge/promise-pool';
-import { sandboxHtml } from '../utils/sandbox.utils.js';
 
 const browser = await puppeteer.launch({ headless: true });
 
@@ -13,6 +10,8 @@ const client = axios.create({
     baseURL: config.cdnjs.api.url,
     timeout: 5000,
 });
+
+const sandboxHtml = load('../sandbox/index.html');
 
 const getLibraries = async () =>
     client
@@ -44,13 +43,6 @@ const probe = async (library) => {
     return { name: library.name, url: library.latest, findings: results };
 };
 
-const save = (results) => {
-    const findings = results.filter((result) => result.findings.length);
-    const output = path.join(process.cwd(), config.cdnjs.export.filename);
-    fs.writeFileSync(output, JSON.stringify(findings, null, 4), { encoding: 'utf8' });
-    console.log(`Saved findings to: ${output}`);
-};
-
 const probeAll = async (concurrency) => {
     const libraries = await getLibraries();
     const { results } = await PromisePool.withConcurrency(concurrency)
@@ -61,7 +53,7 @@ const probeAll = async (concurrency) => {
         })
         .process(probe);
 
-    save(results);
+    log(results);
     browser.close();
     return results;
 };

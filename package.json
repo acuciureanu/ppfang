@@ -19,7 +19,7 @@
         "@supercharge/promise-pool": "^2.3.2",
         "axios": "^0.27.2",
         "commander": "^9.4.0",
-        "puppeteer": "^18.0.5",
+        "puppeteer": "^19.2.0",
         "semantic-release": "^19.0.5"
     },
     "devDependencies": {

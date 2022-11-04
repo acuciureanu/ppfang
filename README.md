@@ -2,7 +2,10 @@
 
 [![CodeQL](https://github.com/acuciureanu/ppfang/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/acuciureanu/ppfang/actions/workflows/codeql-analysis.yml) [![Node.js Package](https://github.com/acuciureanu/ppfang/actions/workflows/publish.yml/badge.svg)](https://github.com/acuciureanu/ppfang/actions/workflows/publish.yml) ![GitHub](https://img.shields.io/github/license/acuciureanu/ppfang)
 
-This is a tool which helps identifying prototype polluting libraries from [cdnjs.com](https://cdnjs.com/).
+This is a tool which helps identifying prototype polluting libraries.
+
+<a href="https://www.buymeacoffee.com/alexcuciureanu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+
 
 The idea came to my mind after checking out a tool named [cdnjs-prototype-pollution](https://github.com/aszx87410/cdnjs-prototype-pollution)\
 written by [@aszx87410](https://github.com/aszx87410) aka Huli.

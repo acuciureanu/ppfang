@@ -7,8 +7,8 @@ This is a tool which helps identifying prototype polluting libraries.
 <a href="https://www.buymeacoffee.com/alexcuciureanu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
 
-The idea came to my mind after checking out a tool named [cdnjs-prototype-pollution](https://github.com/aszx87410/cdnjs-prototype-pollution)\
-written by [@aszx87410](https://github.com/aszx87410) aka Huli.
+The inspiration came from [cdnjs-prototype-pollution](https://github.com/aszx87410/cdnjs-prototype-pollution)\
+by [@aszx87410](https://github.com/aszx87410) aka Huli.
 
 My motivation was to create my own tool with a slightly different approach.
 

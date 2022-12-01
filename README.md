@@ -54,6 +54,10 @@ In this case, the first finding is `String.prototype.$initialize`.
 
 We can execute an `alert()` in this way: `String.prototype.$initialize.call().alert(document.domain)`.
 
+## Presentations which mentioned PPFang
+
+[sec4dev 2022 – Bypassing CSPs Zero to hero – Robbe Van Roey](https://www.youtube.com/watch?v=V75Bg2Y0_8k)
+
 ## Maybe interesting to see
 
 I reimplemented the `cdnjs.service.js` using [`puppeteer-cluster`](https://github.com/thomasdondorf/puppeteer-cluster).

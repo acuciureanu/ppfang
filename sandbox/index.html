@@ -21,11 +21,11 @@
             types.reduce((acc, type) => intersectProtoPropNameReducer(acc, type, prev, curr), {});
     </script>
 
-    <script id="target"></script>
-
     <script>
         const before = prototypePropertyNames();
     </script>
+
+    <script id="target"></script>
 
     <script>
         const after = prototypePropertyNames();

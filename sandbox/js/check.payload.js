@@ -12,7 +12,9 @@ const probe = () =>
         for (let propKey of prototypePropertyNames[key]) {
             const payload = `${key}.prototype.${propKey}`;
             try {
-                if (typeof eval(payload) === 'function' && eval(payload).call() === window) {
+                const propValue = eval(payload);
+                // Check if property is user defined and not native
+                if (typeof propValue === 'function' && propValue.toString().indexOf('[native code]') === -1) {
                     acc.push(payload);
                 }
             } catch (e) {

@@ -11,19 +11,30 @@ const client = axios.create({
     timeout: 5000,
 });
 
+const payload = load('../sandbox/js/check.payload.js');
+
 const createSandbox = (library) => load('../sandbox/index.html').replace('LIBRARY', library);
 
 const getLibraries = async () =>
     client
         .get('/libraries')
-        .then((response) => response.data.results.filter((result) => result.latest !== null && result.latest.endsWith(".js")))
+        .then((response) =>
+            response.data.results.filter((result) => result.latest !== null && result.latest.endsWith('.js'))
+        )
         .catch((error) => console.log(error));
 
 const probe = async (library) => {
     const page = await browser.newPage();
 
     await page.setJavaScriptEnabled(true);
+
     await page.goto(`data:text/html,${createSandbox(library.latest)}`, { waitUntil: 'networkidle0' });
+
+    await page.evaluate((payload) => {
+        const script = document.createElement('script');
+        script.innerHTML = payload;
+        document.head.appendChild(script);
+    }, payload);
 
     const results = await page.evaluate(() => probe());
 

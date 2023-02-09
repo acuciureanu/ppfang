@@ -4,7 +4,7 @@ import { PromisePool } from '@supercharge/promise-pool';
 
 const payload = load('../sandbox/js/check.payload.js');
 
-const browser = await puppeteer.launch({ headless: false });
+const browser = await puppeteer.launch({ headless: true });
 
 const probe = async (pageUrl) => {
     const page = await browser.newPage();
@@ -23,7 +23,6 @@ const probe = async (pageUrl) => {
 
     return { url: pageUrl, findings: results };
 };
-
 
 const probeAll = async (urls, concurrency = 10) => {
     const { results } = await PromisePool.for(urls)

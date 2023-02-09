@@ -11,34 +11,23 @@ const client = axios.create({
     timeout: 5000,
 });
 
-const sandboxHtml = load('../sandbox/index.html');
+const createSandbox = (library) => load('../sandbox/index.html').replace('LIBRARY', library);
 
 const getLibraries = async () =>
     client
         .get('/libraries')
-        .then((response) => response.data.results.filter((result) => result.latest !== null))
+        .then((response) => response.data.results.filter((result) => result.latest !== null && result.latest.endsWith(".js")))
         .catch((error) => console.log(error));
 
 const probe = async (library) => {
-    const pageLoadConfig = { waitUntil: 'networkidle0' };
-
     const page = await browser.newPage();
 
-    await page.setJavaScriptEnabled(false);
-    await page.goto(`data:text/html,${sandboxHtml}`, pageLoadConfig);
-
-    const injectedHtml = await page.evaluate((library) => {
-        document.querySelector('#target').setAttribute('src', `${library.latest}`);
-        return document.documentElement.outerHTML;
-    }, library);
-
     await page.setJavaScriptEnabled(true);
+    await page.goto(`data:text/html,${createSandbox(library.latest)}`, { waitUntil: 'networkidle0' });
 
-    await page.goto(`data:text/html,${injectedHtml}`, pageLoadConfig);
+    const results = await page.evaluate(() => probe());
 
-    const results = await page.evaluate('probe()');
-
-    await page.close();
+    await page.close({ runBeforeUnload: true });
 
     return { name: library.name, url: library.latest, findings: results };
 };
@@ -51,7 +40,15 @@ const probeAll = async (concurrency) => {
             const stats = `[${pool.processedCount()}/${libraries.length} | ${pool.processedPercentage().toFixed(2)}%]`;
             console.log(`${stats} Processed ${library.latest} ...`);
         })
-        .process(probe);
+        .process(async (library) => {
+            const result = await probe(library);
+
+            if (result.findings.length > 0) {
+                console.log(JSON.stringify(result, null, 2));
+            }
+
+            return result;
+        });
 
     log(results);
     browser.close();

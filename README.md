@@ -70,10 +70,4 @@ We can execute an `alert()` in this way: `String.prototype.$initialize.call().al
 
 [sec4dev 2022 – Bypassing CSPs Zero to hero – Robbe Van Roey](https://www.youtube.com/watch?v=V75Bg2Y0_8k)
 
-## Maybe interesting to see
-
-I reimplemented the `cdnjs.service.js` using [`puppeteer-cluster`](https://github.com/thomasdondorf/puppeteer-cluster).
-
-These changes are on the [`make-use-of-puppeteer-cluster`](https://github.com/acuciureanu/ppfang/tree/make-use-of-puppeteer-cluster) branch.
-
 ## Greetings to everyone

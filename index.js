@@ -57,8 +57,15 @@ program
         let urls = [];
         rl.on('line', (line) => urls.push(line));
         rl.on('close', async () => {
-            concurrency || urls.length ? await check.probeAll(urls, concurrency) : await check.probeAll(urls);
-            process.exit(0);
+            try {
+                concurrency || urls.length ? await check.probeAll(urls, concurrency) : await check.probeAll(urls);
+            } catch (error) {
+                console.error('Error during processing:', error);
+            } finally {
+                process.on('exit', () => {
+                    console.log('Done.');
+                });
+            }
         });
     });
 

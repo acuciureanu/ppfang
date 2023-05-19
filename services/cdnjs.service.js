@@ -4,8 +4,6 @@ import { load, log } from '../utils/file.utils.js';
 import puppeteer from 'puppeteer';
 import { PromisePool } from '@supercharge/promise-pool';
 
-const browser = await puppeteer.launch({ headless: true });
-
 const client = axios.create({
     baseURL: config.cdnjs.api.url,
     timeout: 5000,
@@ -23,7 +21,7 @@ const getLibraries = async () =>
         )
         .catch((error) => console.log(error));
 
-const probe = async (library) => {
+const probe = async (browser, library) => {
     const page = await browser.newPage();
 
     await page.setJavaScriptEnabled(true);
@@ -44,26 +42,37 @@ const probe = async (library) => {
 };
 
 const probeAll = async (concurrency) => {
+    const browser = await puppeteer.launch({ headless: 'new' });
+
     const libraries = await getLibraries();
-    const { results } = await PromisePool.withConcurrency(concurrency)
-        .for(libraries)
-        .onTaskFinished((library, pool) => {
-            const stats = `[${pool.processedCount()}/${libraries.length} | ${pool.processedPercentage().toFixed(2)}%]`;
-            console.log(`${stats} Processed ${library.latest} ...`);
-        })
-        .process(async (library) => {
-            const result = await probe(library);
+    try {
+        const { results } = await PromisePool.withConcurrency(concurrency)
+            .for(libraries)
+            .onTaskFinished((library, pool) => {
+                const stats = `[${pool.processedCount()}/${libraries.length} | ${pool.processedPercentage().toFixed(2)}%]`;
+                console.log(`${stats} Processed ${library.latest} ...`);
+            })
+            .process(async (library) => {
+                const result = await probe(browser, library);
 
-            if (result.findings.length > 0) {
-                console.log(JSON.stringify(result, null, 2));
+                if (result.findings.length > 0) {
+                    console.log(JSON.stringify(result, null, 2));
+                }
+
+                return result;
+            });
+
+        log(results);
+        return results;
+    } finally {
+        const pages = await browser.pages();
+        for (const page of pages) {
+            if (!page.isClosed()) {
+                await page.close();
             }
-
-            return result;
-        });
-
-    log(results);
-    browser.close();
-    return results;
+        }
+        await browser.close();
+    }
 };
 
 export default { probeAll };

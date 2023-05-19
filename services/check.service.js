@@ -4,8 +4,6 @@ import { PromisePool } from '@supercharge/promise-pool';
 
 const payload = load('../sandbox/js/check.payload.js');
 
-const browser = await puppeteer.launch({ headless: true });
-
 const probe = async (pageUrl) => {
     const page = await browser.newPage();
 
@@ -25,14 +23,25 @@ const probe = async (pageUrl) => {
 };
 
 const probeAll = async (urls, concurrency = 10) => {
+    const browser = await puppeteer.launch({ headless: "new" });
+    try {
     const { results } = await PromisePool.for(urls)
         .withConcurrency(concurrency)
         .onTaskFinished((url, pool) => console.log(`[${pool.processedPercentage().toFixed(2)}%] Processed ${url} ...`))
         .process(probe);
 
     log(results);
-    browser.close();
     return results;
+    } finally {
+        const pages = await browser.pages();
+        for (const page of pages) {
+            if (!page.isClosed()) {
+                await page.close();
+            }
+        }
+        await browser.close();
+    }
+    browser.close();
 };
 
 export default { probeAll };

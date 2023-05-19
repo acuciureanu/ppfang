@@ -17,14 +17,13 @@ In case you get the following message on `Ubuntu/Debian`:
 ```
 /.cache/puppeteer/chrome/linux-1108766/chrome-linux/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory
 ```
-
-## Install dependencies
-
 You might need to install the following packages:
 
 ```sh
 sudo apt-get install libnss3 libxss1 libasound2 libatk-bridge2.0-0 libgtk-3-0 libgbm-dev
 ```
+
+## Install dependencies
 
 ```sh
 npm install -g ppfang

@@ -29,6 +29,18 @@ sudo apt-get install libnss3 libxss1 libasound2 libatk-bridge2.0-0 libgtk-3-0 li
 npm install -g ppfang
 ```
 
+Or, if you prefer to install it from as an npm package from this repo directly.
+
+```sh
+npm install -g .
+```
+
+Or, if you want to simply run it.
+
+```sh
+node index.js
+```
+
 ## Usage
 
 ```text

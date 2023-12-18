@@ -1,25 +1,28 @@
-const types = [Object, String, Number, Array, Function, Boolean];
+const types = [Object, String, Number, Array, Function];
 
-const prototypesPropertiesReducer = (acc, type) => ({
-    ...acc,
-    [type.name]: Object.getOwnPropertyNames(type.prototype),
-});
+const prototypePropertyNames = new Map();
+types.forEach(type => prototypePropertyNames.set(type.name, Object.getOwnPropertyNames(type.prototype)));
 
-const prototypePropertyNames = () => types.reduce(prototypesPropertiesReducer, {});
+const probe = () => {
+    const userDefinedProps = [];
 
-const probe = () =>
-    Object.keys(prototypePropertyNames()).reduce((acc, key) => {
-        for (let propKey of prototypePropertyNames()[key]) {
-            const payload = `${key}.prototype.${propKey}`;
+    prototypePropertyNames.forEach((props, key) => {
+        const prototype = window[key]?.prototype;
+
+        for (let i = 0; i < props.length; i++) {
+            const prop = props[i];
+            let propValue;
+
             try {
-                const propValue = eval(payload);
-                // Check if property is user defined and not native
+                propValue = prototype[prop];
                 if (typeof propValue === 'function' && !propValue.toString().includes('[native code]')) {
-                    acc.push(payload);
+                    userDefinedProps.push(`${key}.prototype.${prop}`);
                 }
             } catch (e) {
-                // Nothing to catch now.
+                // Ignore errors
             }
         }
-        return acc;
-    }, []);
+    });
+
+    return userDefinedProps;
+};

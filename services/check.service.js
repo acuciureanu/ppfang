@@ -4,9 +4,7 @@ import { PromisePool } from '@supercharge/promise-pool';
 
 const payload = load('../sandbox/js/check.payload.js');
 
-const probe = async (pageUrl) => {
-    const page = await browser.newPage();
-
+const probe = async (pageUrl, page) => {
     await page.goto(pageUrl, { waitUntil: 'networkidle0' });
 
     await page.evaluate((payload) => {
@@ -23,17 +21,23 @@ const probe = async (pageUrl) => {
 };
 
 const probeAll = async (urls, concurrency = 10) => {
-    const browser = await puppeteer.launch({ headless: "new" });
-    try {
-    const { results } = await PromisePool.for(urls)
-        .withConcurrency(concurrency)
-        .onTaskFinished((url, pool) => console.log(`[${pool.processedPercentage().toFixed(2)}%] Processed ${url} ...`))
-        .process(probe);
+    const browser = await puppeteer.launch({ headless: 'new' });
+    const pages = await browser.pages();
 
-    log(results);
-    return results;
+    try {
+        const { results } = await PromisePool.for(urls)
+            .withConcurrency(concurrency)
+            .onTaskFinished((url, pool) => console.log(`[${pool.processedPercentage().toFixed(2)}%] Processed ${url} ...`))
+            .process(async (url) => {
+                const page = pages.length > 0 ? pages.shift() : await browser.newPage();
+                const result = await probe(url, page);
+                pages.push(page);
+                return result;
+            });
+
+        log(results);
+        return results;
     } finally {
-        const pages = await browser.pages();
         for (const page of pages) {
             if (!page.isClosed()) {
                 await page.close();
@@ -41,7 +45,6 @@ const probeAll = async (urls, concurrency = 10) => {
         }
         await browser.close();
     }
-    browser.close();
 };
 
 export default { probeAll };

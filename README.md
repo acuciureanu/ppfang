@@ -13,7 +13,9 @@ PPFang is a powerful tool designed to detect and mitigate prototype pollution vu
 ## Features
 
 🔍 Verify the latest libraries from cdnjs.com
+
 📜 Check a list of URLs for client-side prototype polluting functions
+
 🚀 Easy installation and usage
 
 ## Prerequisites

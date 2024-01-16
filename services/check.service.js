@@ -27,7 +27,9 @@ const probeAll = async (urls, concurrency = 10) => {
     try {
         const { results } = await PromisePool.for(urls)
             .withConcurrency(concurrency)
-            .onTaskFinished((url, pool) => console.log(`[${pool.processedPercentage().toFixed(2)}%] Processed ${url} ...`))
+            .onTaskFinished((url, pool) =>
+                console.log(`[${pool.processedPercentage().toFixed(2)}%] Processed ${url} ...`)
+            )
             .process(async (url) => {
                 const page = pages.length > 0 ? pages.shift() : await browser.newPage();
                 const result = await probe(url, page);

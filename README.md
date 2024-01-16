@@ -12,9 +12,9 @@ PPFang is a powerful tool designed to detect and mitigate prototype pollution vu
 
 ## Features
 
-- Verify the latest libraries from cdnjs.com
-- Check a list of URLs for client-side prototype polluting functions
-- Easy installation and usage
+🔍 Verify the latest libraries from cdnjs.com
+📜 Check a list of URLs for client-side prototype polluting functions
+🚀 Easy installation and usage
 
 ## Prerequisites
 
@@ -63,6 +63,12 @@ Or, if you want to simply run it.
 node index.js
 ```
 
+or with arguments
+
+```sh
+node index.js -- [arguments go here]
+```
+
 ## Usage
 
 ```text
@@ -96,9 +102,25 @@ Examples:
 Happy hunting!
 ```
 
-In this case, the first finding is `String.prototype.$initialize`.
+## Interpreting Results 🧐
 
-We can execute an `alert()` in this way: `String.prototype.$initialize.call().alert(document.domain)`.
+PPFang will output a list of potential prototype pollution vulnerabilities. For example, you might see a result like `String.prototype.$initialize`. This means that the `$initialize` function is potentially polluting the `String` prototype.
+
+## Testing Vulnerabilities 🔍
+
+You can test the potential impact of this pollution by executing a function in the context of this prototype. For instance, you can execute an `alert()` function like this:
+
+```javascript
+String.prototype.$initialize.call().alert(document.domain);
+```
+
+In this example, `document.domain` is passed to the `alert()` function. If the prototype pollution vulnerability is exploitable, this will display an alert box with the current document's domain.
+
+## Mitigating Risks 🛡️
+
+Once you've identified potential vulnerabilities, take the steps to mitigate them. This might involve refactoring your code or removing the offending library.
+
+Remember, the goal of PPFang is to help you identify these potential vulnerabilities so you can take steps to mitigate them. Always ensure to validate the findings and take appropriate action to secure your code.
 
 ## Presentations which mentioned PPFang
 

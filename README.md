@@ -6,6 +6,10 @@ Are you concerned about prototype pollution vulnerabilities in your JavaScript c
 
 <a href="https://www.buymeacoffee.com/alexcuciureanu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
+## Inspiration
+
+My project was influenced by Huli's ([@aszx87410](https://github.com/aszx87410)) work on [cdnjs-prototype-pollution](https://github.com/aszx87410/cdnjs-prototype-pollution). After exploring his approach, I was motivated to develop my own project, taking a different path.
+
 ## What is PPFang?
 
 PPFang is a powerful tool designed to detect and mitigate prototype pollution vulnerabilities in your client-side JavaScript code. With PPFang, you can ensure the security and reliability of your applications by identifying and eliminating potential risks.

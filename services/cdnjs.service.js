@@ -49,7 +49,9 @@ const probeAll = async (concurrency) => {
         const { results } = await PromisePool.withConcurrency(concurrency)
             .for(libraries)
             .onTaskFinished((library, pool) => {
-                const stats = `[${pool.processedCount()}/${libraries.length} | ${pool.processedPercentage().toFixed(2)}%]`;
+                const stats = `[${pool.processedCount()}/${libraries.length} | ${pool
+                    .processedPercentage()
+                    .toFixed(2)}%]`;
                 console.log(`${stats} Processed ${library.latest} ...`);
             })
             .process(async (library) => {

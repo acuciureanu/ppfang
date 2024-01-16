@@ -17,6 +17,7 @@ In case you get the following message on `Ubuntu/Debian`:
 ```
 /.cache/puppeteer/chrome/linux-1108766/chrome-linux/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory
 ```
+
 You might need to install the following packages:
 
 ```sh

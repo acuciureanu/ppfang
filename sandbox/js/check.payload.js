@@ -1,28 +1,34 @@
-const types = [Object, String, Number, Array, Function];
+let cleanWindow = null;
 
+const getCleanWindow = () => {
+    if (!cleanWindow) {
+        const iframe = document.createElement('iframe');
+        document.body.appendChild(iframe);
+        cleanWindow = iframe.contentWindow;
+        document.body.removeChild(iframe);
+    }
+    return cleanWindow;
+};
+
+const types = [Object, String, Number, Array, Function, Date, Boolean, RegExp];
 const prototypePropertyNames = new Map();
-types.forEach(type => prototypePropertyNames.set(type.name, Object.getOwnPropertyNames(type.prototype)));
+
+const calculateDifferences = (type) => {
+    const cleanProps = Object.getOwnPropertyNames(getCleanWindow()[type.name].prototype);
+    const currentProps = Object.getOwnPropertyNames(window[type.name].prototype);
+    return currentProps.filter((prop) => !cleanProps.includes(prop));
+};
 
 const probe = () => {
-    const userDefinedProps = [];
-
-    prototypePropertyNames.forEach((props, key) => {
-        const prototype = window[key]?.prototype;
-
-        for (let i = 0; i < props.length; i++) {
-            const prop = props[i];
-            let propValue;
-
-            try {
-                propValue = prototype[prop];
-                if (typeof propValue === 'function' && !propValue.toString().includes('[native code]')) {
-                    userDefinedProps.push(`${key}.prototype.${prop}`);
-                }
-            } catch (e) {
-                // Ignore errors
-            }
+    let findings = [];
+    types.forEach((type) => {
+        if (!prototypePropertyNames.has(type.name)) {
+            prototypePropertyNames.set(type.name, calculateDifferences(type));
         }
-    });
 
-    return userDefinedProps;
+        prototypePropertyNames.get(type.name).forEach((prop) => {
+            findings.push(`${type.name}.prototype.${prop}`);
+        });
+    });
+    return findings;
 };

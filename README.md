@@ -1,14 +1,35 @@
-# PPFang
+# PPFang - Identify Client-Side Prototype Pollution
 
 [![CodeQL](https://github.com/acuciureanu/ppfang/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/acuciureanu/ppfang/actions/workflows/codeql-analysis.yml) [![Node.js Package](https://github.com/acuciureanu/ppfang/actions/workflows/publish.yml/badge.svg)](https://github.com/acuciureanu/ppfang/actions/workflows/publish.yml) ![GitHub](https://img.shields.io/github/license/acuciureanu/ppfang)
 
-This is a tool which helps identifying prototype polluting libraries.
+Are you concerned about prototype pollution vulnerabilities in your JavaScript code? Look no further! PPFang is here to help you identify and eliminate prototype polluting libraries.
 
 <a href="https://www.buymeacoffee.com/alexcuciureanu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
-The inspiration came from [cdnjs-prototype-pollution](https://github.com/aszx87410/cdnjs-prototype-pollution) by [@aszx87410](https://github.com/aszx87410) aka Huli.
+## What is PPFang?
 
-The motivation was to create my own tool with a slightly different approach.
+PPFang is a powerful tool designed to detect and mitigate prototype pollution vulnerabilities in your client-side JavaScript code. With PPFang, you can ensure the security and reliability of your applications by identifying and eliminating potential risks.
+
+## Features
+
+- Verify the latest libraries from cdnjs.com
+- Check a list of URLs for client-side prototype polluting functions
+- Easy installation and usage
+
+## Prerequisites
+
+Before getting started with PPFang, make sure you have the following prerequisites installed on your Ubuntu/Debian system:
+
+- libnss3
+- libxss1
+- libasound2
+- libatk-bridge2.0-0
+- libgtk-3-0
+- libgbm-dev
+
+## Installation
+
+To install PPFang, simply run the following command:
 
 ## Prerequisites on `Ubuntu/Debian`
 

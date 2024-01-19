@@ -123,7 +123,7 @@ String.prototype.$initialize.call(alert(document.domain))
 For more special cases, such as getting results where the function names have names like: `String.prototype.$<=>`, `String.prototype.$==`, `String.prototype.$eql?` and so on. You can do it like this:
 
 ```javascript
-String.prototype['$<=>'].call(alert(1))
+String.prototype['$<=>'].call(alert(document.domain))
 ```
 
 

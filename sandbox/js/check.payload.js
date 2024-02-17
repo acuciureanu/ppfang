@@ -27,7 +27,7 @@ const probe = () => {
         }
 
         prototypePropertyNames.get(type.name).forEach((prop) => {
-            findings.push(`${type.name}.prototype.${prop}`);
+            findings.push(`${type.name}.prototype${/[^\w]/.test(prop) ? `['${prop}']` : `.${prop}`}`);
         });
     });
     return findings;

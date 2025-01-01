@@ -10,7 +10,7 @@ describe('BrowserPoolManager', () => {
         browserPool = new BrowserPoolManager({
             maxConcurrency: 2,
             timeout: 5000,
-            retryAttempts: 2
+            retryAttempts: 2,
         });
     });
 
@@ -31,7 +31,7 @@ describe('BrowserPoolManager', () => {
     test('should acquire and release browser successfully', async () => {
         const browser = await browserPool.acquireBrowser();
         expect(browser).toBeDefined();
-        
+
         await browserPool.releaseBrowser(browser);
         const metrics = browserPool.getMetrics();
         expect(metrics.poolSize).toBeGreaterThan(0);
@@ -39,7 +39,7 @@ describe('BrowserPoolManager', () => {
 
     test('should create optimized page with correct settings', async () => {
         const browser = await browserPool.acquireBrowser();
-        
+
         // Mock the page methods
         const mockSetRequestInterception = jest.fn();
         const mockSetDefaultNavigationTimeout = jest.fn();
@@ -48,17 +48,17 @@ describe('BrowserPoolManager', () => {
             setRequestInterception: mockSetRequestInterception,
             setDefaultNavigationTimeout: mockSetDefaultNavigationTimeout,
             setDefaultTimeout: mockSetDefaultTimeout,
-            on: jest.fn()
+            on: jest.fn(),
         });
-        
+
         browser.newPage = mockNewPage;
-        
+
         const page = await browserPool.createOptimizedPage(browser);
-        
+
         expect(mockSetRequestInterception).toHaveBeenCalledWith(true);
         expect(mockSetDefaultNavigationTimeout).toHaveBeenCalledWith(5000);
         expect(mockSetDefaultTimeout).toHaveBeenCalledWith(5000);
-        
+
         await browserPool.releaseBrowser(browser);
     });
-}); 
+});

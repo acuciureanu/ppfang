@@ -4,7 +4,9 @@
     "description": "A service which detects prototype pollution in libraries",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+        "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+        "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
         "prepare": "husky install",
         "commit": "git-cz",
         "semantic-release": "semantic-release --branches main"
@@ -19,12 +21,14 @@
         "@supercharge/promise-pool": "^3.1.1",
         "axios": "^1.6.7",
         "commander": "^12.0.0",
+        "generic-pool": "^3.9.0",
         "puppeteer": "^22.2.0"
     },
     "devDependencies": {
         "cz-conventional-changelog": "^3.3.0",
         "git-cz": "^4.9.0",
         "husky": "^8.0.3",
+        "jest": "^29.7.0",
         "prettier": "^3.1.1",
         "semantic-release": "^23.0.2"
     },
@@ -36,5 +40,9 @@
         "commitizen": {
             "path": "./node_modules/cz-conventional-changelog"
         }
+    },
+    "jest": {
+        "transform": {},
+        "testEnvironment": "node"
     }
 }

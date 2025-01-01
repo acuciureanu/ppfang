@@ -4,7 +4,7 @@
 
 Are you concerned about prototype pollution vulnerabilities in your JavaScript code? Look no further! PPFang is here to help you identify and eliminate prototype polluting libraries.
 
-<a href="https://www.buymeacoffee.com/alexcuciureanu" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+[![Buy Me A Coffee](https://cdn.buymeacoffee.com/buttons/default-orange.png)](https://www.buymeacoffee.com/alexcuciureanu)
 
 ## Inspiration
 
@@ -41,7 +41,7 @@ To install PPFang, simply run the following command:
 
 In case you get the following message on `Ubuntu/Debian`:
 
-```
+```bash
 /.cache/puppeteer/chrome/linux-1108766/chrome-linux/chrome: error while loading shared libraries: libatk-1.0.so.0: cannot open shared object file: No such file or directory
 ```
 

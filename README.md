@@ -117,15 +117,14 @@ PPFang will output a list of potential prototype pollution vulnerabilities. For 
 You can test the potential impact of this pollution by executing a function in the context of this prototype. For instance, you can execute an `alert()` function like this:
 
 ```javascript
-String.prototype.$initialize.call(alert(document.domain))
+String.prototype.$initialize.call(alert(document.domain));
 ```
 
 For more special cases, such as getting results where the function names have names like: `String.prototype.$<=>`, `String.prototype.$==`, `String.prototype.$eql?` and so on. You can do it like this:
 
 ```javascript
-String.prototype['$<=>'].call(alert(document.domain))
+String.prototype['$<=>'].call(alert(document.domain));
 ```
-
 
 In this example, `document.domain` is passed to the `alert()` function. If the prototype pollution vulnerability is exploitable, this will display an alert box with the current document's domain.
 
